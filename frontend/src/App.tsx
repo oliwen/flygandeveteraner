@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import "./App.css";
+import { motion } from "framer-motion";
 
 type Video = {
   buttonNumber: number;
@@ -29,8 +30,8 @@ const videos: Video[] = [
     buttonNumber: 3,
     title: "Meckande",
     videoName: "3",
-    start: 20,
-    end: 30,
+    start: 0,
+    end: 10,
   },
   {
     buttonNumber: 4,
@@ -76,18 +77,46 @@ const VideoPlayer: React.FC<{
 
       return () => video?.removeEventListener("ended", onDone);
     }
-
-    if (isActive) {
-      videoRef.current.currentTime = video.start;
-      videoRef.current.play();
-    } else {
-      videoRef.current.pause();
-      videoRef.current.currentTime = video.start;
-    }
   }, [isActive, isAutoScrolling, onDone, video.start]);
 
   return (
-    <div className="video-container">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isActive ? 1 : 0 }}
+      transition={{ duration: 2 }}
+      onAnimationStart={(definition) => {
+        if (
+          videoRef.current &&
+          typeof definition === "object" &&
+          "opacity" in definition &&
+          definition.opacity === 1
+        ) {
+          videoRef.current.currentTime = video.start;
+          videoRef.current.play();
+        }
+      }}
+      onUpdate={(definition) => {
+        if (
+          videoRef.current &&
+          typeof definition === "object" &&
+          "opacity" in definition &&
+          typeof definition.opacity === "number"
+        ) {
+          videoRef.current.volume = definition.opacity;
+        }
+      }}
+      onAnimationComplete={(definition) => {
+        if (
+          videoRef.current &&
+          typeof definition === "object" &&
+          "opacity" in definition &&
+          definition.opacity === 0
+        ) {
+          videoRef.current.pause();
+        }
+      }}
+      className="video-container"
+    >
       <video
         ref={videoRef}
         poster={
@@ -95,7 +124,6 @@ const VideoPlayer: React.FC<{
             ? `/videos/generated/${video.videoName}_thumbnail.png`
             : ""
         }
-        muted={!import.meta.env.PROD}
       >
         <source
           src={`/videos/${import.meta.env.PROD ? "generated" : ""}/${
@@ -111,7 +139,7 @@ const VideoPlayer: React.FC<{
           </h2>
         </div>
       ) : undefined}
-    </div>
+    </motion.div>
   );
 };
 
@@ -159,11 +187,7 @@ function App() {
   }, [activeIndex, socket]);
 
   return (
-    <div
-      style={{
-        transform: `translateY(-${activeIndex * window.innerHeight}px)`,
-      }}
-    >
+    <div className="videos-container">
       {videos.map((video, i) => (
         <VideoPlayer
           key={video.buttonNumber}

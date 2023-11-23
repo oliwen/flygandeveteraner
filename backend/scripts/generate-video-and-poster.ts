@@ -30,8 +30,8 @@ function scaleAndCreateThumbnail(name: string) {
         }),
       }
     );
-  } catch (exception: any) {
-    console.warn(exception.message);
+  } catch (error) {
+    console.warn(error);
   }
 }
 
