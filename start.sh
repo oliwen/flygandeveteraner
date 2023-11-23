@@ -8,23 +8,11 @@ echo "Download latest"
 echo "################"
 git pull
 
-echo "################"
-echo "Prepare frontend"
-echo "################"
-cd frontend
-npm install
-npm run build
-cd ..
-echo ""
+
 echo "################"
 echo "Prepare backend"
 echo "################"
-echo ""
-rm -rf backend/src/public/assets
-rm backend/src/public/index.html
-mkdir -p backend/src/public
-mkdir -p /backend/src/public/videos/generated
-mv -v frontend/dist/index.html backend/src/public
+
 mv -v frontend/dist/assets backend/src/public
 cd backend
 npm install
