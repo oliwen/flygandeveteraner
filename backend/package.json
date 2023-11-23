@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "ts-node ./src/index.ts",
+    "generate-videos": "ts-node ./scripts/generate-video-and-poster.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
