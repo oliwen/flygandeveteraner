@@ -124,6 +124,7 @@ const VideoPlayer: React.FC<{
             ? `/videos/generated/${video.videoName}_thumbnail.png`
             : ""
         }
+        muted={!import.meta.env.PROD}
       >
         <source
           src={`/videos/${import.meta.env.PROD ? "generated" : ""}/${
