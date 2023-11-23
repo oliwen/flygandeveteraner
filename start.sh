@@ -1,9 +1,8 @@
 #!/bin/bash
 
-#echo $1
+arg="${1:-start}"
 
-#if [ $1 == 'full' ] 
-#then
+if [ "$arg" = "full" ]; then
 echo "################"
 echo "Download latest"
 echo "################"
@@ -23,21 +22,24 @@ echo "################"
 echo ""
 rm -rf backend/src/public/assets
 rm backend/src/public/index.html
-mkdir backend/src/public
-mv -v frontend/dist/* backend/src/public
+mkdir -p backend/src/public
+mkdir -p /backend/src/public/videos/generated
+mv -v frontend/dist/index.html backend/src/public
+mv -v frontend/dist/assets backend/src/public
 cd backend
 npm install
-#fi
+else
+cd backend
+fi
 
-#if [$1 == 'full'] || [$1 == 'video']
-#then
+if [ "$arg" = "full" ] || [ "$arg" = "videos" ]; then
 echo ""
 echo "################"
 echo "Optimize videos and create posters"
 echo "################"
 echo ""
 ts-node scripts/generate-video-and-poster.ts
-#fi
+fi
 
 
 echo "################"
