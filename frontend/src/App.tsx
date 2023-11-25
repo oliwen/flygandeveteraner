@@ -92,8 +92,7 @@ const VideoPlayer: React.FC<{
           definition.opacity === 1
         ) {
           videoRef.current.currentTime = video.start;
-          console.log("*** Play video", video.videoName);
-          videoRef.current?.play();
+          videoRef.current.play();
         }
       }}
       onUpdate={(definition) => {
@@ -113,10 +112,7 @@ const VideoPlayer: React.FC<{
           "opacity" in definition &&
           definition.opacity === 0
         ) {
-          setTimeout(() => {
-            console.log("*** Pause video", video.videoName);
-            // videoRef.current?.pause();
-          }, 5000);
+          videoRef.current.pause();
         }
       }}
       className="video-container"
@@ -129,7 +125,6 @@ const VideoPlayer: React.FC<{
             : ""
         }
         muted={!import.meta.env.PROD}
-        controls
       >
         <source
           src={`/videos/${import.meta.env.PROD ? "generated" : ""}/${
