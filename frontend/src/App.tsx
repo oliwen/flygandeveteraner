@@ -92,8 +92,10 @@ const VideoPlayer: React.FC<{
           definition.opacity === 1
         ) {
           videoRef.current.currentTime = video.start;
-          console.log("*** Play video");
-          videoRef.current.play();
+          setTimeout(() => {
+            console.log("*** Play video", video.videoName);
+            videoRef.current?.play();
+          }, 100);
         }
       }}
       onUpdate={(definition) => {
@@ -113,7 +115,7 @@ const VideoPlayer: React.FC<{
           "opacity" in definition &&
           definition.opacity === 0
         ) {
-          console.log("*** Pause video");
+          console.log("*** Pause video", video.videoName);
           videoRef.current.pause();
         }
       }}
