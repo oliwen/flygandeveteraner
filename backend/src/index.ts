@@ -3,6 +3,7 @@ import path from "path";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import rpio from "rpio";
+import { exec } from "child_process";
 
 const PORT = 8080;
 const app: Application = express();
@@ -24,15 +25,6 @@ const buttons: { [key: number]: Button } = {
   3: { index: 3, buttonPin: 6, ledPin: 12 },
   4: { index: 4, buttonPin: 27, ledPin: 25 },
   5: { index: 5, buttonPin: 24, ledPin: 22 },
-};
-
-const t = {
-  26: 21,
-  19: 20,
-  13: 16,
-  6: 12,
-  27: 25,
-  24: 22,
 };
 
 function playVideo(index: number) {
@@ -80,5 +72,8 @@ app.get("/", (_, res) => {
 });
 
 httpServer.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Starting Chromium on http://localhost:${PORT}`);
+  exec(
+    "DISPLAY=:0 chromium-browser --kiosk --autoplay-policy=no-user-gesture-required http://localhost:8080"
+  );
 });
