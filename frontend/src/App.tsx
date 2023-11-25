@@ -115,8 +115,8 @@ const VideoPlayer: React.FC<{
         ) {
           setTimeout(() => {
             console.log("*** Pause video", video.videoName);
-            videoRef.current?.pause();
-          }, 150);
+            // videoRef.current?.pause();
+          }, 5000);
         }
       }}
       className="video-container"
