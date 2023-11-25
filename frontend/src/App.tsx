@@ -129,6 +129,7 @@ const VideoPlayer: React.FC<{
             : ""
         }
         muted={!import.meta.env.PROD}
+        controls
       >
         <source
           src={`/videos/${import.meta.env.PROD ? "generated" : ""}/${
