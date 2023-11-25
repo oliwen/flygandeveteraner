@@ -1,0 +1,68 @@
+[
+  {
+    "buttonNumber": 1,
+    
+    "buttonPin": 26,
+    "ledPin": 21,
+
+    "title": "SAS Jubileum",
+    "name": "1",
+    "start": 0,
+    "end": 10
+  },
+  {
+    "buttonNumber": 2,
+
+    "buttonPin": 19,
+    "ledPin": 20,
+
+    "title": "Flygtur",
+    "name": "2",
+    "start": 10,
+    "end": 20
+  },
+  {
+    "buttonNumber": 3,
+
+    "buttonPin": 13,
+    "ledPin": 16,
+
+    "title": "Meckande",
+    "name": "3",
+    "start": 0,
+    "end": 10
+  },
+  {
+    "buttonNumber": 4,
+
+    "buttonPin": 6,
+    "ledPin": 12,
+
+    "title": "Annan titel",
+    "name": "4",
+    "start": 30,
+    "end": 40
+  },
+  {
+    "buttonNumber": 5,
+
+    "buttonPin": 27,
+    "ledPin": 25,
+
+    "title": "Att flyga med Daisy",
+    "name": "5",
+    "start": 40,
+    "end": 50
+  },
+  {
+    "buttonNumber": 6,
+
+    "buttonPin": 24,
+    "ledPin": 22,
+
+    "title": "Spännande",
+    "name": "6",
+    "start": 50,
+    "end": 60
+  }
+]

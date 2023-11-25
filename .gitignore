@@ -1,4 +1,1 @@
 node_modules
-frontend/dist
-backend/src/public/videos/*
-!backend/src/public/videos/generated

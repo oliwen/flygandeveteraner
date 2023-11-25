@@ -1,60 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
+import { Socket, io } from "socket.io-client";
 import "./App.css";
 import { motion } from "framer-motion";
+import config from "../../config.json";
 
-type Video = {
-  buttonNumber: number;
-  videoName: string;
-  title: string;
-  start: number;
-  end: number;
-};
+type Video = (typeof config)[number];
 
-const videos: Video[] = [
-  {
-    buttonNumber: 1,
-    title: "SAS Jubileum",
-    videoName: "1",
-    start: 0,
-    end: 10,
-  },
-  {
-    buttonNumber: 2,
-    title: "Flygtur",
-    videoName: "2",
-    start: 10,
-    end: 20,
-  },
-  {
-    buttonNumber: 3,
-    title: "Meckande",
-    videoName: "3",
-    start: 0,
-    end: 10,
-  },
-  {
-    buttonNumber: 4,
-    title: "Annan titel",
-    videoName: "4",
-    start: 30,
-    end: 40,
-  },
-  {
-    buttonNumber: 5,
-    title: "Att flyga med Daisy",
-    videoName: "5",
-    start: 40,
-    end: 50,
-  },
-  {
-    buttonNumber: 6,
-    title: "Spännande",
-    videoName: "6",
-    start: 50,
-    end: 60,
-  },
-];
+const sortedConfig = config.sort((a, b) => a.buttonNumber - b.buttonNumber);
 
 const VideoPlayer: React.FC<{
   video: Video;
@@ -119,19 +71,10 @@ const VideoPlayer: React.FC<{
     >
       <video
         ref={videoRef}
-        poster={
-          import.meta.env.PROD
-            ? `/videos/generated/${video.videoName}_thumbnail.png`
-            : ""
-        }
+        poster={`/videos/${video.name}_poster.png`}
         muted={!import.meta.env.PROD}
       >
-        <source
-          src={`/videos/${import.meta.env.PROD ? "generated" : ""}/${
-            video.videoName
-          }.mp4`}
-          type="video/mp4"
-        />
+        <source src={`/videos/${video.name}.mp4`} type="video/mp4" />
       </video>
       {isAutoScrolling ? (
         <div className="video-info">
@@ -147,19 +90,25 @@ const VideoPlayer: React.FC<{
 function App() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoScrolling, setAutoScrolling] = useState(true);
-  const [socket] = useState(() => io());
+  const [socket] = useState(
+    () =>
+      io() as Socket<
+        { playVideo: (name: string) => void },
+        { done: (name: string) => void }
+      >
+  );
 
   useEffect(() => {
     let timeout: number | undefined;
     if (isAutoScrolling) {
       timeout = setTimeout(() => {
         setActiveIndex((currentActiveIndex) => {
-          if (currentActiveIndex >= videos.length - 1) {
+          if (currentActiveIndex >= sortedConfig.length - 1) {
             return 0;
           }
           return currentActiveIndex + 1;
         });
-      }, (videos[activeIndex].end - videos[activeIndex].start) * 1000);
+      }, (sortedConfig[activeIndex].end - sortedConfig[activeIndex].start) * 1000);
     }
 
     return () => {
@@ -170,7 +119,8 @@ function App() {
   }, [activeIndex, isAutoScrolling]);
 
   useEffect(() => {
-    function playVideo(index: number) {
+    function playVideo(name: string) {
+      const index = config.findIndex((video) => video.name === name);
       setAutoScrolling(false);
       setActiveIndex(index);
     }
@@ -182,14 +132,17 @@ function App() {
   }, [socket]);
 
   const onDone = useCallback(() => {
-    socket.emit("done", activeIndex);
+    const activeVideo = config[activeIndex];
+    if (activeVideo) {
+      socket.emit("done", activeVideo.name);
+    }
     setActiveIndex(activeIndex + 1);
     setAutoScrolling(true);
   }, [activeIndex, socket]);
 
   return (
     <div className="videos-container">
-      {videos.map((video, i) => (
+      {sortedConfig.map((video, i) => (
         <VideoPlayer
           key={video.buttonNumber}
           video={video}
