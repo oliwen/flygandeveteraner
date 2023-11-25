@@ -74,6 +74,14 @@ app.get("/", (_, res) => {
 httpServer.listen(PORT, () => {
   console.log(`Starting Chromium on http://localhost:${PORT}`);
   exec(
-    "DISPLAY=:0 chromium-browser --kiosk --autoplay-policy=no-user-gesture-required http://localhost:8080"
+    "DISPLAY=:0 " +
+      "chromium-browser " +
+      "--kiosk  " +
+      "--no-first-run " +
+      "--start-maximized  " +
+      "--noerrdialogs " +
+      "--disable-infobars " +
+      "--autoplay-policy=no-user-gesture-required " +
+      "http://localhost:8080"
   );
 });
