@@ -101,7 +101,7 @@ function App() {
   useEffect(() => {
     let timeout: number | undefined;
     if (isAutoScrolling) {
-      timeout = setTimeout(() => {
+      timeout = window.setTimeout(() => {
         setActiveIndex((currentActiveIndex) => {
           if (currentActiveIndex >= sortedConfig.length - 1) {
             return 0;
