@@ -49,7 +49,7 @@ function scaleAndCreateThumbnail(name) {
             );
         } catch (error) { }
     } else {
-        console.log(`Tried to convert ${name}.mp4 to 720p, but the 720p-file already exists. If you want to replace it with a new video, use a new name or remove the previous video`);
+        console.log(`Tried to convert ${outputFile} to 720p, but the 720p-file already exists. If you want to replace it with a new video, use a new name or remove the previous video`);
     }
 }
 
