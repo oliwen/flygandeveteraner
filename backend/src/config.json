@@ -1,7 +1,6 @@
 [
   {
     "buttonNumber": 1,
-    
     "buttonPin": 26,
     "ledPin": 21,
 
@@ -12,7 +11,6 @@
   },
   {
     "buttonNumber": 2,
-
     "buttonPin": 19,
     "ledPin": 20,
 
@@ -23,7 +21,6 @@
   },
   {
     "buttonNumber": 3,
-
     "buttonPin": 13,
     "ledPin": 16,
 
@@ -34,7 +31,6 @@
   },
   {
     "buttonNumber": 4,
-
     "buttonPin": 6,
     "ledPin": 12,
 
@@ -45,7 +41,6 @@
   },
   {
     "buttonNumber": 5,
-
     "buttonPin": 27,
     "ledPin": 25,
 
@@ -56,7 +51,6 @@
   },
   {
     "buttonNumber": 6,
-
     "buttonPin": 24,
     "ledPin": 22,
 
