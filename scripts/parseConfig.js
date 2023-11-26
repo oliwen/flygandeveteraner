@@ -1,10 +1,10 @@
 const child_process = require("child_process");
 const path = require("path");
-const config = require("./config.json");
+const config = require("../config.json");
 const fs = require("fs");
 
-const videoFolder = path.join(__dirname, "./videos");
-const publicFolder = path.join(__dirname, "frontend/public/videos");
+const videoFolder = path.join(__dirname, "../videos");
+const publicFolder = path.join(__dirname, "../frontend/public/videos");
 
 function validateConfig() {
     const nameSet = new Set(config.map(video => video.name));

@@ -22,4 +22,4 @@ echo "################"
 echo ""
 mkdir -p backend/src/public
 cp -r frontend/dist/* backend/src/public
-echo "Everything ready, run 'sh start.sh' to start video player"
+echo "Everything ready, copy backend folder to Raspberry Pi"
