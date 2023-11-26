@@ -1,7 +1,6 @@
 #!/bin/bash
 
-echo "################"
-echo "Start server"
-echo "################"
+echo "Starting server..."
+
 cd backend
 npm run start

@@ -4,7 +4,7 @@ echo "################"
 echo "Parse config and process videos"
 echo "################"
 echo ""
-node parseConfig.js
+node ./scripts/parseConfig.js
 
 echo ""
 echo "################"
